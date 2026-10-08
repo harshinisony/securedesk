@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in — SecureDesk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2026.8" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23059669%27 stroke-width=%272.5%27%3E%3Cpath d=%27M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5%27/%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-brand-center">
+        <div class="brand-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-title-wrap">
+          <span class="brand-name">SecureDesk</span>
+          <span class="brand-sub">SOC 2026</span>
+        </div>
+      </div>
+
+      <h1>Sign In to Console</h1>
+      <p class="lead">Incident triage, forensics &amp; cyber defense operations.</p>
+
+      <div id="expired-alert" class="alert alert-info hidden">
+        <span>Session expired. Please sign in again to continue.</span>
+      </div>
+      <div id="verify-alert" class="alert alert-info hidden">
+        <span>Please verify your email address.
+        <a href="#" id="resend-link" style="text-decoration:underline;margin-left:4px;font-weight:700;">Resend link</a></span>
+      </div>
+      <div id="error-alert" class="alert alert-error hidden"></div>
+
+      <form id="login-form">
+        <div class="field">
+          <label for="email">Security Identity (Email)</label>
+          <input type="email" id="email" name="email" required autocomplete="username" placeholder="user@securedesk.local" />
+        </div>
+        <div class="field">
+          <label for="password">Access Credential (Password)</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="••••••••••••" />
+        </div>
+        <button type="submit" class="btn-primary" id="submit-btn" style="width:100%;margin-top:0.4rem;padding:0.65rem;">
+          Sign In to Dashboard
+        </button>
+      </form>
+
+      <!-- 1-Click Demo Accounts Quick-Fill & Direct Login -->
+      <div class="demo-accounts-box">
+        <div class="demo-title">
+          <span>Quick Demo Access (From start.bat)</span>
+          <span style="font-weight:700;color:var(--lux-green);font-size:0.72rem;letter-spacing:0.04em;">1-CLICK INSTANT LOGIN</span>
+        </div>
+        <div class="demo-cards-list">
+          <!-- Admin Card -->
+          <div class="demo-role-card">
+            <div class="demo-role-info">
+              <div class="demo-role-badge badge-admin">Admin</div>
+              <div class="demo-role-email">admin@securedesk.local</div>
+              <div class="demo-role-cred mono">AdminPassword123!</div>
+            </div>
+            <button type="button" class="btn-demo-login" data-demo-email="admin@securedesk.local" data-demo-password="AdminPassword123!">
+              <span>Sign In</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+          <!-- Investigator Card -->
+          <div class="demo-role-card">
+            <div class="demo-role-info">
+              <div class="demo-role-badge badge-investigator">Investigator</div>
+              <div class="demo-role-email">investigator@securedesk.local</div>
+              <div class="demo-role-cred mono">Investigator123!</div>
+            </div>
+            <button type="button" class="btn-demo-login" data-demo-email="investigator@securedesk.local" data-demo-password="Investigator123!">
+              <span>Sign In</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+          <!-- Employee Card -->
+          <div class="demo-role-card">
+            <div class="demo-role-info">
+              <div class="demo-role-badge badge-employee">Employee</div>
+              <div class="demo-role-email">employee@securedesk.local</div>
+              <div class="demo-role-cred mono">EmployeePassword123!</div>
+            </div>
+            <button type="button" class="btn-demo-login" data-demo-email="employee@securedesk.local" data-demo-password="EmployeePassword123!">
+              <span>Sign In</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-footer">
+        Need an investigator or employee account? <a href="register.html" style="font-weight:700;">Register here</a>
+      </div>
+
+      <div class="trust-badges">
+        <span>🔒 256-bit AES</span>
+        <span>⚡ Live Defense</span>
+        <span>🛡️ SOC 2 Enforced</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js?v=2026.8"></script>
+  <script src="js/auth.js?v=2026.8"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Audit Trail — SecureDesk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2026.8" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23059669%27 stroke-width=%272.5%27%3E%3Cpath d=%27M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5%27/%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- App Topbar Navbar (Replaces Sidebar) -->
+    <header class="app-topnav">
+      <div class="topnav-container">
+        <!-- Brand -->
+        <a href="dashboard.html" class="topnav-brand">
+          <div class="brand-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="brand-title-wrap">
+            <span class="brand-name">SecureDesk</span>
+            <span class="brand-sub">SOC Operations</span>
+          </div>
+        </a>
+
+        <!-- Horizontal Nav Links -->
+        <nav class="topnav-nav">
+          <a href="dashboard.html" class="topnav-link" id="nav-incidents">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Incident Queue</span>
+          </a>
+          <a href="users.html" class="topnav-link admin-only hidden" id="nav-users">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Users</span>
+            <span class="nav-badge-pill">Admin</span>
+          </a>
+          <a href="audit.html" class="topnav-link admin-only hidden active" id="nav-audit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Audit Log</span>
+            <span class="nav-badge-pill">Admin</span>
+          </a>
+          <a href="profile.html" class="topnav-link" id="nav-settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <!-- Topbar Right Actions -->
+        <div class="topnav-actions">
+          <div class="demo-role-switcher" title="Quick Demo Role Switcher">
+            <span class="switcher-label">Demo:</span>
+            <button type="button" class="role-switch-btn" data-switch-role="admin">Admin</button>
+            <button type="button" class="role-switch-btn" data-switch-role="investigator">Investigator</button>
+            <button type="button" class="role-switch-btn" data-switch-role="employee">Employee</button>
+          </div>
+
+          <div class="user-chip-menu" onclick="window.location.href='profile.html'" title="My Profile">
+            <div class="user-avatar-circle" id="user-avatar">U</div>
+            <div class="user-chip-meta">
+              <span class="user-name-text" id="user-name">Loading…</span>
+              <span class="user-role-text" id="user-role">ADMIN</span>
+            </div>
+          </div>
+
+          <button class="btn-signout-compact" id="logout-btn" title="Sign Out">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main View Wrapper -->
+    <div class="main-wrapper">
+
+      <main class="page-content">
+        <div class="page-header-row">
+          <div class="page-heading-group">
+            <h1>Immutable Audit Trail &amp; Telemetry</h1>
+            <p>Cryptographically recorded security logs, IP addresses, session states, and forensic timestamps.</p>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <div class="field">
+            <label for="filter-event">Telemetry Event Filter</label>
+            <select id="filter-event">
+              <option value="">All Security Events</option>
+              <option value="suspicious">⚠️ Suspicious / Anomaly Events Only</option>
+              <option value="login">User Logins &amp; Active Sessions</option>
+              <option value="logout">Logouts &amp; Session Revocations</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="filter-email">Search User / Principal</label>
+            <input type="text" id="filter-email" placeholder="e.g. admin, investigator, user@domain" />
+          </div>
+          <div class="field">
+            <label for="filter-keyword">Search IP / Indicators / Details</label>
+            <input type="text" id="filter-keyword" placeholder="e.g. 127.0.0.1, unauthorized, denied" />
+          </div>
+          <button class="btn-sm" id="clear-filters-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Reset Filters
+          </button>
+        </div>
+
+        <div id="error-alert" class="alert alert-error hidden"></div>
+
+        <div class="card-table-wrap">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th style="padding-left:1.25rem;" class="nowrap">Subject Identity</th>
+                  <th class="nowrap">Origin IP</th>
+                  <th class="nowrap">Action Type</th>
+                  <th class="nowrap">Event Timestamp</th>
+                  <th class="nowrap">Session State</th>
+                  <th class="nowrap">Risk Rating</th>
+                  <th style="padding-right:1.25rem;">Forensic Context</th>
+                </tr>
+              </thead>
+              <tbody id="logs-tbody"></tbody>
+            </table>
+          </div>
+          <div id="empty-state" class="empty-state hidden">No audit log records match the applied telemetry filters.</div>
+          <div id="loading-state" class="empty-state"><span class="spinner"></span>&nbsp; Ingesting audit telemetry…</div>
+
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js?v=2026.8"></script>
+  <script src="js/ui.js?v=2026.8"></script>
+  <script src="js/audit.js?v=2026.8"></script>
+</body>
+</html>

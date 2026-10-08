@@ -1,0 +1,9 @@
+# Use this workspace to collaborate
+workspace:
+  id: 1fb9aee8-e4c9-4bd8-8c84-315ae01d8380
+
+localResources:
+  collections:
+    - ../securedesk/postman/SecureDesk.postman_collection.json
+  environments:
+    - ../securedesk/postman/SecureDesk.postman_environment.json

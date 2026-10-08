@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Directory — SecureDesk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2026.8" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23059669%27 stroke-width=%272.5%27%3E%3Cpath d=%27M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5%27/%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- App Topbar Navbar (Replaces Sidebar) -->
+    <header class="app-topnav">
+      <div class="topnav-container">
+        <!-- Brand -->
+        <a href="dashboard.html" class="topnav-brand">
+          <div class="brand-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="brand-title-wrap">
+            <span class="brand-name">SecureDesk</span>
+            <span class="brand-sub">SOC Operations</span>
+          </div>
+        </a>
+
+        <!-- Horizontal Nav Links -->
+        <nav class="topnav-nav">
+          <a href="dashboard.html" class="topnav-link" id="nav-incidents">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Incident Queue</span>
+          </a>
+          <a href="users.html" class="topnav-link admin-only hidden active" id="nav-users">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Users</span>
+            <span class="nav-badge-pill">Admin</span>
+          </a>
+          <a href="audit.html" class="topnav-link admin-only hidden" id="nav-audit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Audit Log</span>
+            <span class="nav-badge-pill">Admin</span>
+          </a>
+          <a href="profile.html" class="topnav-link" id="nav-settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <!-- Topbar Right Actions -->
+        <div class="topnav-actions">
+          <div class="demo-role-switcher" title="Quick Demo Role Switcher">
+            <span class="switcher-label">Demo:</span>
+            <button type="button" class="role-switch-btn" data-switch-role="admin">Admin</button>
+            <button type="button" class="role-switch-btn" data-switch-role="investigator">Investigator</button>
+            <button type="button" class="role-switch-btn" data-switch-role="employee">Employee</button>
+          </div>
+
+          <button class="btn-primary btn-sm" id="new-user-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Provision User
+          </button>
+
+          <div class="user-chip-menu" onclick="window.location.href='profile.html'" title="My Profile">
+            <div class="user-avatar-circle" id="user-avatar">U</div>
+            <div class="user-chip-meta">
+              <span class="user-name-text" id="user-name">Loading…</span>
+              <span class="user-role-text" id="user-role">ADMIN</span>
+            </div>
+          </div>
+
+          <button class="btn-signout-compact" id="logout-btn" title="Sign Out">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main View Wrapper -->
+    <div class="main-wrapper">
+
+      <main class="page-content">
+        <div class="page-header-row">
+          <div class="page-heading-group">
+            <h1>Identity &amp; Access Governance</h1>
+            <p>Administer organization user credentials, role privilege boundaries, and account states.</p>
+          </div>
+        </div>
+
+        <!-- KPI Stat Cards Row -->
+        <div class="stat-kpi-grid" style="margin-bottom:1.5rem;">
+          <!-- Total Users -->
+          <div class="kpi-card">
+            <div class="kpi-card-top">
+              <span class="kpi-label">Total Users Enrolled</span>
+              <div class="kpi-icon-pill">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <div>
+                <div class="kpi-value" id="kpi-users-total">0</div>
+                <span class="kpi-trend" id="trend-users-total">&bull; Active directory</span>
+              </div>
+              <svg class="kpi-sparkline" viewBox="0 0 72 28" fill="none">
+                <path d="M2 20 C 14 22, 22 10, 34 13 C 44 16, 52 4, 70 6" stroke="#059669" stroke-width="2.2" stroke-linecap="round" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Active Accounts -->
+          <div class="kpi-card">
+            <div class="kpi-card-top">
+              <span class="kpi-label">Active Accounts</span>
+              <div class="kpi-icon-pill icon-resolved">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <div>
+                <div class="kpi-value" id="kpi-users-active" style="color:var(--lux-green);">0</div>
+                <span class="kpi-trend" id="trend-users-active">100% enabled</span>
+              </div>
+              <svg class="kpi-sparkline" viewBox="0 0 72 28" fill="none">
+                <path d="M2 21 C 16 16, 32 19, 44 8 C 55 2, 62 9, 70 2" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Security Investigators -->
+          <div class="kpi-card">
+            <div class="kpi-card-top">
+              <span class="kpi-label">Investigators</span>
+              <div class="kpi-icon-pill icon-active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <div>
+                <div class="kpi-value" id="kpi-users-investigators" style="color:var(--sky-blue);">0</div>
+                <span class="kpi-trend trend-sky" id="trend-users-investigators">SOC clearance</span>
+              </div>
+              <svg class="kpi-sparkline" viewBox="0 0 72 28" fill="none">
+                <path d="M2 18 C 16 18, 28 24, 40 9 C 52 4, 62 11, 70 3" stroke="#0ea5e9" stroke-width="2.2" stroke-linecap="round" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Employees & Members -->
+          <div class="kpi-card">
+            <div class="kpi-card-top">
+              <span class="kpi-label">Employees / Staff</span>
+              <div class="kpi-icon-pill" style="background:#f1f5f9;color:var(--text-muted);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <div>
+                <div class="kpi-value" id="kpi-users-employees">0</div>
+                <span class="kpi-trend" id="trend-users-employees" style="background:#f1f5f9;color:var(--text-muted);">Standard tier</span>
+              </div>
+              <svg class="kpi-sparkline" viewBox="0 0 72 28" fill="none">
+                <path d="M2 22 C 14 20, 24 12, 38 14 C 50 16, 60 8, 70 4" stroke="#64748b" stroke-width="2.2" stroke-linecap="round" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users Governance Visual Analytics & Graphs -->
+        <div class="analytics-grid-row" style="margin-bottom:1.5rem;">
+          <!-- Graph 1: Role Distribution Donut Chart -->
+          <div class="chart-card">
+            <div class="card-header-bar">
+              <h2>User Role Distribution</h2>
+              <span class="badge badge-low" style="font-size:0.68rem;padding:3px 8px;">Access Tiers</span>
+            </div>
+
+            <div class="donut-chart-wrap" style="padding:1rem 0;">
+              <div class="donut-svg-center">
+                <svg viewBox="0 0 36 36" style="width:100%;height:100%;transform:rotate(-90deg);">
+                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f5f9" stroke-width="3.6" />
+                  <!-- Employee segment (Sky Blue) -->
+                  <path id="donut-users-employee" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#0ea5e9" stroke-width="4.2" stroke-dasharray="0, 100" stroke-linecap="round" />
+                  <!-- Investigator segment (Luxe Green) -->
+                  <path id="donut-users-investigator" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#059669" stroke-width="4.2" stroke-dasharray="0, 100" />
+                  <!-- Admin segment (Purple) -->
+                  <path id="donut-users-admin" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#7c3aed" stroke-width="4.2" stroke-dasharray="0, 100" />
+                </svg>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+                  <span style="font-size:1.15rem;font-weight:800;color:var(--text-main);" id="users-donut-center-total">0</span>
+                  <span style="display:block;font-size:0.62rem;color:var(--text-dim);text-transform:uppercase;font-weight:700;">Users</span>
+                </div>
+              </div>
+
+              <div class="donut-legend-list">
+                <div class="legend-item">
+                  <div class="legend-left">
+                    <span class="legend-dot" style="background:#0ea5e9;"></span>
+                    <span>Employees / Staff</span>
+                  </div>
+                  <span class="legend-pct" id="pct-role-employee">0%</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-left">
+                    <span class="legend-dot" style="background:#059669;"></span>
+                    <span>Security Investigators</span>
+                  </div>
+                  <span class="legend-pct" id="pct-role-investigator">0%</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-left">
+                    <span class="legend-dot" style="background:#7c3aed;"></span>
+                    <span>Administrators</span>
+                  </div>
+                  <span class="legend-pct" id="pct-role-admin">0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Graph 2: Account Health & Governance Compliance -->
+          <div class="chart-card">
+            <div class="card-header-bar">
+              <h2>Account Health &amp; Security Posture</h2>
+              <span style="font-size:0.75rem;font-weight:700;color:var(--lux-green);" id="account-health-score">100% Compliant</span>
+            </div>
+
+            <div style="padding:0.75rem 0;display:flex;flex-direction:column;gap:1.1rem;">
+              <!-- Active Directory Rate -->
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.8rem;font-weight:600;margin-bottom:0.35rem;">
+                  <span style="color:var(--text-main);">Active Account Ratio</span>
+                  <span style="color:var(--lux-green);font-weight:800;" id="metric-active-ratio">100%</span>
+                </div>
+                <div style="height:8px;background:#f1f5f9;border-radius:999px;overflow:hidden;">
+                  <div id="bar-active-ratio" style="height:100%;width:100%;background:var(--gradient-lux);border-radius:999px;"></div>
+                </div>
+              </div>
+
+              <!-- Identity Verification Rate -->
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.8rem;font-weight:600;margin-bottom:0.35rem;">
+                  <span style="color:var(--text-main);">Email Verified Identities</span>
+                  <span style="color:var(--sky-blue);font-weight:800;" id="metric-verified-ratio">100%</span>
+                </div>
+                <div style="height:8px;background:#f1f5f9;border-radius:999px;overflow:hidden;">
+                  <div id="bar-verified-ratio" style="height:100%;width:100%;background:#0ea5e9;border-radius:999px;"></div>
+                </div>
+              </div>
+
+              <!-- Privilege Segregation -->
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.8rem;font-weight:600;margin-bottom:0.35rem;">
+                  <span style="color:var(--text-main);">Role-Based Access Governance</span>
+                  <span style="color:#7c3aed;font-weight:800;">Enforced</span>
+                </div>
+                <div style="height:8px;background:#f1f5f9;border-radius:999px;overflow:hidden;">
+                  <div style="height:100%;width:100%;background:#7c3aed;border-radius:999px;"></div>
+                </div>
+              </div>
+
+              <div style="margin-top:0.25rem;padding:0.65rem 0.85rem;background:var(--bg-surface-subtle);border:1px solid var(--border);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:0.75rem;color:var(--text-muted);">Self-lockout safeguard active:</span>
+                <span class="badge badge-low" style="font-size:0.68rem;">Protected</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Toolbar -->
+        <div class="toolbar">
+          <div class="field">
+            <label for="filter-role">Filter by Role</label>
+            <select id="filter-role">
+              <option value="">All Roles</option>
+              <option value="employee">Employee</option>
+              <option value="investigator">Investigator</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="filter-active">Account Status</label>
+            <select id="filter-active">
+              <option value="">All States</option>
+              <option value="true">Active Only</option>
+              <option value="false">Deactivated Only</option>
+            </select>
+          </div>
+          <button class="btn-sm" id="clear-filters-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Reset Filters
+          </button>
+        </div>
+
+        <div id="notice-alert" class="alert alert-success hidden"></div>
+        <div id="error-alert" class="alert alert-error hidden"></div>
+
+        <!-- Table Card -->
+        <div class="card-table-wrap">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th style="padding-left:1.25rem;">User Profile</th>
+                  <th>Email Address</th>
+                  <th>Role Assignment</th>
+                  <th>Account Status</th>
+                  <th>Enrolled Timestamp</th>
+                  <th style="padding-right:1.25rem;">Access Management</th>
+                </tr>
+              </thead>
+              <tbody id="users-tbody"></tbody>
+            </table>
+          </div>
+          <div id="empty-state" class="empty-state hidden">No user records match the applied criteria.</div>
+          <div id="loading-state" class="empty-state"><span class="spinner"></span>&nbsp; Loading directory entries…</div>
+
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Dialog: Provision New User -->
+  <dialog id="new-user-dialog">
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:0.6rem;">
+        <div class="brand-icon-box" style="width:28px;height:28px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:15px;height:15px;">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+          </svg>
+        </div>
+        <h2>Provision New User</h2>
+      </div>
+      <button class="modal-close" id="close-dialog-btn" aria-label="Close">&times;</button>
+    </div>
+    <div id="create-error-alert" class="alert alert-error hidden"></div>
+    <form id="new-user-form">
+      <div class="field">
+        <label for="new-name">Full Name</label>
+        <input type="text" id="new-name" required placeholder="e.g. Jordan Casey" />
+      </div>
+      <div class="field">
+        <label for="new-email">Corporate Email Address</label>
+        <input type="email" id="new-email" required placeholder="jordan@company.com" />
+      </div>
+      <div class="field">
+        <label for="new-password">Temporary Password</label>
+        <input type="password" id="new-password" required placeholder="At least 8 chars with letter & number" />
+      </div>
+      <div class="field">
+        <label for="new-role">Role Privilege Tier</label>
+        <select id="new-role" required>
+          <option value="employee">Employee (Report &amp; Track Self-Incidents)</option>
+          <option value="investigator">Investigator (Triage &amp; Analysis)</option>
+          <option value="admin">Administrator (Complete Governance)</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-sm" id="cancel-dialog-btn">Cancel</button>
+        <button type="submit" class="btn-primary" id="create-submit-btn">Create User Account</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/api.js?v=2026.8"></script>
+  <script src="js/ui.js?v=2026.8"></script>
+  <script src="js/users.js?v=2026.8"></script>
+</body>
+</html>

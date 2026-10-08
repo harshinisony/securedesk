@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Settings — SecureDesk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2026.8" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23059669%27 stroke-width=%272.5%27%3E%3Cpath d=%27M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5%27/%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- App Topbar Navbar (Replaces Sidebar) -->
+    <header class="app-topnav">
+      <div class="topnav-container">
+        <!-- Brand -->
+        <a href="dashboard.html" class="topnav-brand">
+          <div class="brand-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="brand-title-wrap">
+            <span class="brand-name">SecureDesk</span>
+            <span class="brand-sub">SOC Operations</span>
+          </div>
+        </a>
+
+        <!-- Horizontal Nav Links -->
+        <nav class="topnav-nav">
+          <a href="dashboard.html" class="topnav-link" id="nav-incidents">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Incident Queue</span>
+          </a>
+          <a href="users.html" class="topnav-link admin-only hidden" id="nav-users">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Users</span>
+            <span class="nav-badge-pill">Admin</span>
+          </a>
+          <a href="audit.html" class="topnav-link admin-only hidden" id="nav-audit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Audit Log</span>
+            <span class="nav-badge-pill">Admin</span>
+          </a>
+          <a href="profile.html" class="topnav-link active" id="nav-settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <!-- Topbar Right Actions -->
+        <div class="topnav-actions">
+          <div class="demo-role-switcher" title="Quick Demo Role Switcher">
+            <span class="switcher-label">Demo:</span>
+            <button type="button" class="role-switch-btn" data-switch-role="admin">Admin</button>
+            <button type="button" class="role-switch-btn" data-switch-role="investigator">Investigator</button>
+            <button type="button" class="role-switch-btn" data-switch-role="employee">Employee</button>
+          </div>
+
+          <div class="user-chip-menu" onclick="window.location.href='profile.html'" title="My Profile">
+            <div class="user-avatar-circle" id="user-avatar">U</div>
+            <div class="user-chip-meta">
+              <span class="user-name-text" id="user-name">Loading…</span>
+              <span class="user-role-text" id="user-role">MEMBER</span>
+            </div>
+          </div>
+
+          <button class="btn-signout-compact" id="logout-btn" title="Sign Out">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main View Wrapper -->
+    <div class="main-wrapper">
+
+      <main class="page-content" style="max-width:700px;">
+        <div class="page-header-row">
+          <div class="page-heading-group">
+            <h1>Identity &amp; Security Profile</h1>
+            <p>Manage your account credentials, security preferences, and authentication keys.</p>
+          </div>
+        </div>
+
+        <!-- Account Identity Card -->
+        <div class="card" style="margin-bottom:1.5rem;">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color:var(--lux-green);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Account Identity
+          </h3>
+          
+          <div id="name-success-alert" class="alert alert-success hidden"></div>
+          <div id="name-error-alert" class="alert alert-error hidden"></div>
+
+          <form id="update-name-form">
+            <div class="field">
+              <label for="edit-name">Display Name</label>
+              <input type="text" id="edit-name" required maxlength="120" />
+            </div>
+
+            <dl class="kv-grid" style="margin-bottom:1.25rem;background:var(--bg-surface-subtle);padding:1rem;border-radius:var(--radius-md);border:1px solid var(--border);">
+              <dt>Security Email</dt>
+              <dd id="profile-email" class="mono" style="color:var(--lux-green);font-weight:700;">—</dd>
+              <dt>Assigned Tier</dt>
+              <dd id="profile-role" class="mono" style="text-transform:uppercase;font-weight:700;">—</dd>
+            </dl>
+
+            <button type="submit" class="btn-primary" id="update-name-btn">
+              Save Display Name
+            </button>
+          </form>
+
+          <p style="margin-top:1rem;font-size:0.8rem;color:var(--text-muted);">
+            🔒 Primary email address is locked to your organization authentication identity. Contact SOC Admin for identity re-binding.
+          </p>
+        </div>
+
+        <!-- Password Rotation Card -->
+        <div class="card">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color:var(--sky-blue);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Credential Rotation &amp; Password
+          </h3>
+
+          <div id="success-alert" class="alert alert-success hidden"></div>
+          <div id="error-alert" class="alert alert-error hidden"></div>
+
+          <form id="change-password-form">
+            <div class="field">
+              <label for="current-password">Current Access Password</label>
+              <input type="password" id="current-password" required autocomplete="current-password" placeholder="••••••••••••" />
+            </div>
+            <div class="field">
+              <label for="new-password">New Secure Password</label>
+              <input type="password" id="new-password" required autocomplete="new-password" placeholder="At least 8 characters with letter & number" />
+              <span style="display:block;margin-top:0.35rem;color:var(--text-muted);font-size:0.75rem;">
+                Minimum 8 characters with alphanumeric combination.
+              </span>
+            </div>
+            <div class="field">
+              <label for="confirm-password">Confirm New Password</label>
+              <input type="password" id="confirm-password" required autocomplete="new-password" placeholder="••••••••••••" />
+            </div>
+            <button type="submit" class="btn-primary" id="submit-btn">
+              Rotate &amp; Update Password
+            </button>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js?v=2026.8"></script>
+  <script src="js/ui.js?v=2026.8"></script>
+  <script src="js/profile.js?v=2026.8"></script>
+</body>
+</html>
